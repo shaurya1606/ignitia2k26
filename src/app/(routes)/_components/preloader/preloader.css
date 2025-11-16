@@ -1,0 +1,326 @@
+/* Preloader Styles */
+.preloader-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.buttonCont {
+  display: flex;
+  position: absolute;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  left: 1.25em;
+  top: 1.25em;
+  padding: 1em 0;
+  width: 8.5em;
+  height: 15em;
+  border-radius: 0.15em;
+  background: rgba(195, 198, 205, 0.06);
+  box-shadow: inset 2em 2em 12em -4em rgba(195, 198, 205, 0.2);
+  list-style: none;
+  margin: 0;
+  z-index: 10000;
+}
+
+.button {
+  position: relative;
+  display: block;
+  padding: 0 1em;
+  height: 2.5em;
+  font-family: 'Open Sans', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 8px;
+  line-height: 2.5em;
+  border-radius: 0.15em;
+  overflow: hidden;
+  cursor: pointer;
+  transition: box-shadow 0.6s ease;
+  user-select: none;
+}
+
+.button.gemBlue_B {
+  color: #276EFF;
+  background-color: #1E2448;
+}
+
+.button.phosGreen-II_B {
+  color: #15f4c2;
+  background-color: #0A1819;
+}
+
+.button.honeyComb_B {
+  color: #FCB367;
+  background-color: #FFF8E4;
+}
+
+.button.whtSlate_B {
+  color: #a0aAa9;
+  background-color: #E4EDEC;
+}
+
+.button:active {
+  transition: box-shadow 0.15s ease-out;
+  box-shadow: 0 0.5em 0.33em -0.33em rgba(0, 0, 0, 0.12), 0 0.33em 1em -0.25em rgba(0, 0, 0, 0.2);
+}
+
+#colorWrapper {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(14, 12, 16);
+  transition: background-color 0.35s ease-out;
+}
+
+.grid {
+  width: calc((2.75em * 4 + 0.5em * 3) * 0.7);
+  height: 6.25em;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: rotateX(-35deg) rotateY(-45deg);
+  transform-style: preserve-3d;
+}
+
+.grid *,
+.grid {
+  transform-style: preserve-3d;
+}
+
+.cube {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-style: preserve-3d;
+}
+
+/* 4x4 grid positioning */
+.cube:nth-child(1) { transform: translate3d(-4.8125em, 0, -4.8125em); }
+.cube:nth-child(2) { transform: translate3d(-1.625em, 0, -4.8125em); }
+.cube:nth-child(3) { transform: translate3d(1.625em, 0, -4.8125em); }
+.cube:nth-child(4) { transform: translate3d(4.8125em, 0, -4.8125em); }
+.cube:nth-child(5) { transform: translate3d(-4.8125em, 0, -1.625em); }
+.cube:nth-child(6) { transform: translate3d(-1.625em, 0, -1.625em); }
+.cube:nth-child(7) { transform: translate3d(1.625em, 0, -1.625em); }
+.cube:nth-child(8) { transform: translate3d(4.8125em, 0, -1.625em); }
+.cube:nth-child(9) { transform: translate3d(-4.8125em, 0, 1.625em); }
+.cube:nth-child(10) { transform: translate3d(-1.625em, 0, 1.625em); }
+.cube:nth-child(11) { transform: translate3d(1.625em, 0, 1.625em); }
+.cube:nth-child(12) { transform: translate3d(4.8125em, 0, 1.625em); }
+.cube:nth-child(13) { transform: translate3d(-4.8125em, 0, 4.8125em); }
+.cube:nth-child(14) { transform: translate3d(-1.625em, 0, 4.8125em); }
+.cube:nth-child(15) { transform: translate3d(1.625em, 0, 4.8125em); }
+.cube:nth-child(16) { transform: translate3d(4.8125em, 0, 4.8125em); }
+
+/* Animation delays for wave effect */
+.cube:nth-child(1) .lifter,
+.cube:nth-child(1) .cube__face:nth-child(1) { animation-delay: 0s; }
+.cube:nth-child(2) .lifter,
+.cube:nth-child(2) .cube__face:nth-child(1) { animation-delay: 0.1466s; }
+.cube:nth-child(3) .lifter,
+.cube:nth-child(3) .cube__face:nth-child(1) { animation-delay: 0.2932s; }
+.cube:nth-child(4) .lifter,
+.cube:nth-child(4) .cube__face:nth-child(1) { animation-delay: 0.4398s; }
+.cube:nth-child(5) .lifter,
+.cube:nth-child(5) .cube__face:nth-child(1) { animation-delay: 0.1466s; }
+.cube:nth-child(6) .lifter,
+.cube:nth-child(6) .cube__face:nth-child(1) { animation-delay: 0.2932s; }
+.cube:nth-child(7) .lifter,
+.cube:nth-child(7) .cube__face:nth-child(1) { animation-delay: 0.4398s; }
+.cube:nth-child(8) .lifter,
+.cube:nth-child(8) .cube__face:nth-child(1) { animation-delay: 0.5864s; }
+.cube:nth-child(9) .lifter,
+.cube:nth-child(9) .cube__face:nth-child(1) { animation-delay: 0.2932s; }
+.cube:nth-child(10) .lifter,
+.cube:nth-child(10) .cube__face:nth-child(1) { animation-delay: 0.4398s; }
+.cube:nth-child(11) .lifter,
+.cube:nth-child(11) .cube__face:nth-child(1) { animation-delay: 0.5864s; }
+.cube:nth-child(12) .lifter,
+.cube:nth-child(12) .cube__face:nth-child(1) { animation-delay: 0.733s; }
+.cube:nth-child(13) .lifter,
+.cube:nth-child(13) .cube__face:nth-child(1) { animation-delay: 0.4398s; }
+.cube:nth-child(14) .lifter,
+.cube:nth-child(14) .cube__face:nth-child(1) { animation-delay: 0.5864s; }
+.cube:nth-child(15) .lifter,
+.cube:nth-child(15) .cube__face:nth-child(1) { animation-delay: 0.733s; }
+.cube:nth-child(16) .lifter,
+.cube:nth-child(16) .cube__face:nth-child(1) { animation-delay: 0.8796s; }
+
+.cube__face {
+  margin: calc(-10 * 2.75em + 20px);
+  width: 2.75em;
+  height: 2.75em;
+  position: absolute;
+  transition: background 0.35s ease-out;
+}
+
+.cube__face:nth-child(1) {
+  transform: rotateX(90deg) translateZ(1.375em);
+  background: #101418;
+  animation: aniCL 0.7875s cubic-bezier(0.4, 0.2, 0.4, 0.6) alternate infinite;
+}
+
+.cube__face:nth-child(2) {
+  transform: rotateY(90deg) translateZ(1.375em);
+  background: #333f80;
+}
+
+.cube__face:nth-child(3) {
+  transform: translateZ(1.375em);
+  background: #276EFF;
+}
+
+.lifter {
+  transform-origin: 0 1.375em;
+  transform: scaleY(0);
+  animation: ani 0.7875s cubic-bezier(0.5, 0.1, 0.5, 0.9) alternate infinite;
+}
+
+@keyframes ani {
+  0% { transform: scaleY(0); }
+  100% { transform: scaleY(0.533); }
+}
+
+@keyframes aniCL {
+  0% { background: #1E2448; }
+  100% { background: #101418; }
+}
+
+/* Gem Blue Theme (Default) */
+#colorWrapper.gemBlue {
+  background-color: rgb(12, 12, 20);
+}
+
+#colorWrapper.gemBlue .cube__face:nth-child(1) {
+  background: #101C28;
+  animation: aniCL-gemBlue 0.7875s cubic-bezier(0.4, 0.2, 0.4, 0.6) alternate infinite;
+}
+
+#colorWrapper.gemBlue .cube__face:nth-child(2) {
+  background: #2D59C8;
+}
+
+#colorWrapper.gemBlue .cube__face:nth-child(3) {
+  background: #10AAFF;
+}
+
+@keyframes aniCL-gemBlue {
+  0% { background: #1B2E6E; }
+  100% { background: #101C28; }
+}
+
+/* Honey Comb Theme */
+#colorWrapper.honeyComb {
+  background-color: rgb(250, 252, 251);
+}
+
+#colorWrapper.honeyComb .cube__face:nth-child(1) {
+  background: #FFF2D0;
+  animation: aniCL-honeyComb 0.7875s cubic-bezier(0.4, 0.2, 0.4, 0.6) alternate infinite;
+}
+
+#colorWrapper.honeyComb .cube__face:nth-child(2) {
+  background: #FFD792;
+}
+
+#colorWrapper.honeyComb .cube__face:nth-child(3) {
+  background: #FCB367;
+}
+
+@keyframes aniCL-honeyComb {
+  0% { background: #FFF8E4; }
+  100% { background: #FFF2D0; }
+}
+
+/* White Slate Theme */
+#colorWrapper.whtSlate {
+  background-color: rgb(250, 252, 251);
+}
+
+#colorWrapper.whtSlate .cube__face:nth-child(1) {
+  background: #D0DAD9;
+  animation: aniCL-whtSlate 0.7875s cubic-bezier(0.4, 0.2, 0.4, 0.6) alternate infinite;
+}
+
+#colorWrapper.whtSlate .cube__face:nth-child(2) {
+  background: #B9C6C7;
+}
+
+#colorWrapper.whtSlate .cube__face:nth-child(3) {
+  background: #E4EDEC;
+}
+
+@keyframes aniCL-whtSlate {
+  0% { background: #D0DAD9; }
+  100% { background: #D0DAD9; }
+}
+
+/* Phosphorescent Green Theme */
+#colorWrapper.phosGreen {
+  background-color: rgb(16, 18, 22);
+}
+
+#colorWrapper.phosGreen .cube__face:nth-child(1) {
+  background: #0A1819;
+  animation: aniCL-phosGreen 0.7875s cubic-bezier(0.4, 0.2, 0.4, 0.6) alternate infinite;
+}
+
+#colorWrapper.phosGreen .cube__face:nth-child(2) {
+  background: #102928;
+}
+
+#colorWrapper.phosGreen .cube__face:nth-child(3) {
+  background: #15f4c2;
+}
+
+@keyframes aniCL-phosGreen {
+  0% { background: #0d2c2f; }
+  100% { background: #0A1819; }
+}
+
+/* Ink Ripple Effect */
+.ink {
+  display: block;
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  pointer-events: none !important;
+  height: 12em;
+  width: 12em;
+}
+
+.whtSlate_B .ink {
+  background-color: #B9C6C7;
+}
+
+.honeyComb_B .ink {
+  background-color: #FFD792;
+}
+
+.phosGreen-II_B .ink {
+  background-color: #15f4c2;
+}
+
+.gemBlue_B .ink {
+  background-color: #276EFF;
+}
+
+.ink.animateInk {
+  animation: ripple 0.9s cubic-bezier(0.2, 0.2, 0, 1) forwards 1;
+}
+
+@keyframes ripple {
+  0% {
+    opacity: 0.6;
+    transform: scale(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}

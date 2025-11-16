@@ -1,0 +1,97 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1762692975240,
+      "tag": "0000_skinny_reavers",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1762708576960,
+      "tag": "0001_lethal_silver_fox",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1762712303725,
+      "tag": "0002_slim_ikaris",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1762713763194,
+      "tag": "0003_uneven_captain_midlands",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1762714137134,
+      "tag": "0004_grey_cerise",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1762718815486,
+      "tag": "0005_great_leopardon",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1762720827137,
+      "tag": "0006_minor_hemingway",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1762801970545,
+      "tag": "0007_mean_gwen_stacy",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1762866976988,
+      "tag": "0008_wide_colleen_wing",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1762876019658,
+      "tag": "0009_chief_blink",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1762954291202,
+      "tag": "0010_small_wildside",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1762988528524,
+      "tag": "0011_flimsy_zarek",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1762989225507,
+      "tag": "0012_next_silvermane",
+      "breakpoints": true
+    }
+  ]
+}
