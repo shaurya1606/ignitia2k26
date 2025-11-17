@@ -123,7 +123,7 @@ export function SignupForm({
                           'border-2 border-yellow-400 bg-black/80 backdrop-blur-xl',
                           'shadow-[0_2px_8px_rgba(255,215,0,0.12)]',
                       ]
-                    : 'shadow-input bg-white p-4 md:p-8 dark:bg-black border-2 border-yellow-400 shadow-[0_2px_8px_rgba(255,215,0,0.12)]'
+                    : 'shadow-0_2px_8px_rgba(255,215,0,0.12) bg-white p-4 md:p-8 dark:bg-black border-2 border-yellow-400'
             )}
         >
             <button
@@ -437,8 +437,8 @@ export function SignupForm({
 const BottomGradient = () => {
     return (
         <>
-            <span className="pointer-events-none absolute inset-x-0 -bottom-px block h-px w-full bg-gradient-to-r from-transparent via-amber-300 to-transparent opacity-0 transition duration-500 group-hover/btn:opacity-100" />
-            <span className="pointer-events-none absolute inset-x-10 -bottom-px mx-auto block h-px w-1/2 bg-gradient-to-r from-transparent via-yellow-400 to-transparent opacity-0 blur-sm transition duration-500 group-hover/btn:opacity-100" />
+            <span className="pointer-events-none absolute inset-x-0 -bottom-px block h-px w-full bg-linear-to-r from-transparent via-amber-300 to-transparent opacity-0 transition duration-500 group-hover/btn:opacity-100" />
+            <span className="pointer-events-none absolute inset-x-10 -bottom-px mx-auto block h-px w-1/2 bg-linear-to-r from-transparent via-yellow-400 to-transparent opacity-0 blur-sm transition duration-500 group-hover/btn:opacity-100" />
         </>
     )
 }

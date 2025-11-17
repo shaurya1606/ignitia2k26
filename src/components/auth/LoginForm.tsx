@@ -163,7 +163,7 @@ export function LoginForm({
                           'border-2 border-yellow-400 bg-black/80 backdrop-blur-xl',
                           'shadow-[0_2px_8px_rgba(255,215,0,0.12)]',
                       ]
-                    : 'shadow-input bg-white p-4 md:p-8 dark:bg-black border-2 border-yellow-400 shadow-[0_2px_8px_rgba(255,215,0,0.12)]'
+                    : 'shadow-input bg-white p-4 md:p-8 dark:bg-black border-2 border-yellow-400 shadow-0_2px_8px_rgba(255,215,0,0.12)'
             )}
         >
             {!isModal && (
