@@ -15,7 +15,7 @@ export default function GlobalNotFound() {
     <html lang="en" className={`${inter.className} dark`}>
       <body>
         <h1>404 - Page Not Found</h1>
-        <p>This page does not exist.</p>
+        <p>This page does not exist. nitya </p>
       </body>
     </html>
   );

@@ -41,8 +41,8 @@ export function LoginButton({
                     <DialogTrigger asChild={Boolean(asChild)}>
                         {children}
                     </DialogTrigger>
-                    <DialogContent className="sm:max-w-lg">
-                        <DialogTitle></DialogTitle>
+                    <DialogContent className="sm:max-w-lg border-0 bg-transparent p-0 shadow-none outline-none">
+                        <DialogTitle className="sr-only">Login</DialogTitle>
                         <LoginForm
                             title="Welcome Back"
                             subtitle="Please enter your credentials"

@@ -7,6 +7,7 @@ const poppins = Poppins({
     variable: '--font-poppins',
     weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
 })
+import AppShell from './AppShell'
 
 export const metadata: Metadata = {
     title: 'Create Next App',
@@ -21,7 +22,7 @@ export default function RootLayout({
     return (
         <html lang="en" className="dark">
             <body className={`${poppins.variable} antialiased`}>
-                {children}
+                <AppShell>{children}</AppShell>
             </body>
         </html>
     )

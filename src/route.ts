@@ -7,7 +7,7 @@
  *
  */
 
-export const publicRoutes = ['/', '/verify-email', '/home', '/gallery', '/sponsors', '/contact', '/leaderboard']
+export const publicRoutes = ['/', '/verify-email', '/home', '/gallery', '/sponsors', '/contact', '/leaderboard', '/about', '/events', '/teams']
 
 export const publicRoutePrefixes: string[] = []
 

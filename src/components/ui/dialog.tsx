@@ -67,13 +67,14 @@ function DialogContent({
             >
                 {children}
                 {showCloseButton && (
-                    <DialogPrimitive.Close
-                        data-slot="dialog-close"
-                        className="ring-offset-background focus:ring-ring data-[state=open]:bg-accent data-[state=open]:text-muted-foreground absolute top-4 right-4 rounded-xs opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4"
-                    >
-                        <XIcon />
-                        <span className="sr-only">Close</span>
-                    </DialogPrimitive.Close>
+                        <DialogPrimitive.Close
+                            data-slot="dialog-close"
+                            className="fixed top-5 left-110 z-50 rounded-xs font-bold text-yellow-400 bg-transparent opacity-90 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2 focus:outline-hidden disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-5"
+                            style={{ fontWeight: 'bold' }}
+                        >
+                            <XIcon className="text-yellow-400"/>
+                            <span className="sr-only">Close</span>
+                        </DialogPrimitive.Close>
                 )}
             </DialogPrimitive.Content>
         </DialogPortal>
