@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import LandingScene from '@/components/landing/LandingScene';
 import MinimalPreloader from '@/components/landing/MinimalPreloader'
 
