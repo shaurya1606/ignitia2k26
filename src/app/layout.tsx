@@ -7,7 +7,6 @@ const poppins = Poppins({
     variable: '--font-poppins',
     weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
 })
-import AppShell from './AppShell'
 
 export const metadata: Metadata = {
     title: 'Create Next App',
@@ -19,10 +18,12 @@ export default function RootLayout({
 }: Readonly<{
     children: React.ReactNode
 }>) {
+
+
     return (
         <html lang="en" className="dark">
             <body className={`${poppins.variable} antialiased`}>
-                <AppShell>{children}</AppShell>
+               {children}
             </body>
         </html>
     )

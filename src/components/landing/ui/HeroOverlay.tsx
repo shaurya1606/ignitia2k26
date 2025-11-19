@@ -15,23 +15,23 @@ import { useRouter } from 'next/navigation';
 const MenuOption = [
   {
     name: 'Home',
-    href: '/home',
+    href: '#',
   },
   {
     name: 'Gallery',
-    href: '/gallery',
+    href: '#',
   },
   {
     name: 'Sponsors',
-    href: '/sponsors',
+    href: '#',
   },
   {
     name: 'Contact',
-    href: '/contact',
+    href: '#',
   },
   {
     name: 'Leaderboard',
-    href: '/leaderboard',
+    href: '#',
   }
 ]
 
