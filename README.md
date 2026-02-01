@@ -1,36 +1,136 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Authentication-and-Authorization
 
-## Getting Started
+This repository contains a Next.js application focused on authentication and authorization flows, UI and related backend API routes. It includes client pages and components for signup, login, password-reset flows and protected routes.
 
-First, run the development server:
+Summary
+- Framework: Next.js (App Router)
+- Styling: Tailwind CSS
+- Animations: GSAP / Framer Motion (where used)
+- Purpose: Demonstration and implementation of authentication flows, protected routes, and UI components for an event-style site.
 
-```bash
-npm run dev
+## Table of Contents
+- Getting started
+- Development
+- Build & Production
+- Environment variables
+- Project structure
+- Key components
+- Contributing
+- License
+
+## Getting started
+
+Prerequisites
+- Node.js 18+ (or the version your monorepo requires)
+- pnpm (recommended) — or npm / yarn
+
+Install dependencies
+
+```powershell
+pnpm install
 # or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Run development server
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```powershell
+pnpm dev
+# or
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open http://localhost:3000 in your browser.
 
-## Learn More
+## Development
 
-To learn more about Next.js, take a look at the following resources:
+- Routes and pages live under `src/app/` (App Router).
+- API endpoints are under `src/app/api/`.
+- UI components live in `src/components/`.
+- Utilities, db helpers and services are under `src/lib/` and `src/services/`.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Tip: Many pages use client components (`"use client"`) for animations and interactive UX.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Build & Production
 
-## Deploy on Vercel
+Build for production
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```powershell
+pnpm build
+pnpm start
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Deploy: This project can be deployed to Vercel, Netlify, or any Node-compatible host. If using Vercel, the app router is supported out of the box.
+
+## Environment variables
+
+Create a `.env.local` with the variables your app needs. Example variables used in this project (update names to match the actual code):
+
+```
+DATABASE_URL=postgres://user:pass@host:5432/dbname
+NEXTAUTH_URL=https://your-site.com
+NEXTAUTH_SECRET=some-secret
+SMTP_URL=smtp://user:pass@smtp.example.com:587
+STRIPE_SECRET_KEY=sk_live_...
+TWILIO_SID=ACxxxx
+TWILIO_TOKEN=xxxx
+```
+
+Only add secrets to `.env*` files and never commit them to source control.
+
+## Project structure (high level)
+
+Key folders under `src/`:
+
+- `app/` — Next.js app routes and pages (App Router)
+- `app/(auth)` — Authentication pages and flows (signup, login, password reset)
+- `app/(protected)` — Layout and pages for protected routes
+- `components/` — Reusable UI components (auth forms, landing, dashboard, ui primitives)
+- `lib/` — Utilities, db connectors and helpers
+- `services/` — Business logic (auth services, mail, token, user helpers)
+
+Example files / entry points:
+- `src/app/page.tsx` — Landing / home page
+- `src/app/layout.tsx` — Global layout
+- `src/app/api/auth/...` — NextAuth and API routes
+
+## Key components and features
+
+- Authentication flows: Sign up, verify email, login, reset password, new password
+- Protected routes and server-side checks
+- Preloader and page transition animations (GSAP / Tailwind utility classes)
+- Lenis-based smooth scroll on some landing pages
+
+## Troubleshooting & common commands
+
+- Run linting (if configured): `pnpm lint`
+- Run tests (if present): `pnpm test`
+- Format code: `pnpm format` or via your editor setup
+
+## Contributing
+
+1. Fork the repo
+2. Create a new branch: `feature/xyz`
+3. Make changes and add tests
+4. Open a pull request describing the change
+
+Please follow the repository's code style and commit message guidelines.
+
+## Where to find things
+
+- Authentication pages: `src/app/(auth)`
+- Page transition overlay component: `src/app/(routes)/_components/PageTransition.tsx` (controls tile animations)
+- Landing scene & hero: `src/components/landing/*`
+
+## License
+
+This project does not include a license file. Add a `LICENSE` if you want to open-source it (MIT / Apache-2.0 are common choices).
+
+---
+
+If you want, I can:
+- Add a `CONTRIBUTING.md` with PR and branch rules
+- Add example `.env.local.example` with variable names used by the app
+- Add automated scripts for lint/test/build in package.json
+
+If you'd like me to write one of those now, tell me which and I'll add it.
