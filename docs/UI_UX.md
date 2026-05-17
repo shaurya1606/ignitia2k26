@@ -6,7 +6,7 @@ User-facing surfaces, design system, and component map.
 
 ## Current state
 
-**Demo-ready** — dual-skin layout (dark marketing, light app shell). PerformIQ branding in metadata, navbar, auth, and legal pages.
+**Demo-ready** —  PerformIQ branding in metadata, navbar, auth, and legal pages.
 
 ---
 

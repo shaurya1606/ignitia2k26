@@ -1,131 +1,104 @@
 # PerformIQ
 
-**PerformIQ** · Enterprise-style goal setting, manager approval, and quarterly check-ins.
+**Enterprise performance lifecycle management platform.**  
+Structured goal-setting, manager approval workflows, quarterly KPI tracking, and governance audit trails — in one role-based application.
 
-## Problem
+![Landing Page](./docs/assets/screenshots/landing/landing-hero.png)
 
-Organizations struggle to align annual goals, manager approvals, and quarterly progress in one auditable system. Spreadsheets and email chains break down at scale.
+---
 
-## Solution
+## Overview
 
-**PerformIQ** is a role-based web portal where employees draft and submit goal sheets, managers review and lock approvals, and admins govern cycles, shared KPIs, compliance exports, and audit trails.
-
-## Architecture (high level)
+PerformIQ replaces spreadsheets and email chains with a structured, auditable workflow covering the full annual performance cycle:
 
 ```
-Browser (Next.js App Router)
-    → proxy.ts (NextAuth + RBAC + AtomQuest route guards)
-    → API routes (/api/atomquest/*)
-    → Drizzle ORM → PostgreSQL (Neon)
+Employee sets goals → Manager reviews & approves → Quarterly actuals entered → Admin governs & reports
 ```
 
-See [ARCHITECTURE.md](./ARCHITECTURE.md) for flows.
+Built for **AtomQuest** as a hackathon demonstration of an enterprise HRTech platform.
 
-## Tech stack
+---
+
+## Key Features
+
+| Feature | Description |
+|---------|-------------|
+| **Role-based access** | Employee, Manager, Admin — each with scoped routes and capabilities |
+| **Goal lifecycle** | DRAFT → SUBMITTED → RETURNED → LOCKED with full validation |
+| **Weightage enforcement** | 100% total, 10% minimum per goal, max 8 goals per sheet |
+| **Manager review** | Inline edit, approve & lock, or return with feedback |
+| **Quarterly check-ins** | UOM-aware inputs (numeric, percent, timeline, zero-defect) with progress scoring |
+| **Shared KPIs** | Admin assigns org-wide goals to multiple employees simultaneously |
+| **Admin dashboard** | Recharts analytics: submission pipeline, achievement mix, manager completion |
+| **Audit trail** | Immutable log of all lifecycle events with before/after diffs |
+| **CSV export** | Performance data export for compliance reporting |
+| **Authentication** | Credentials + OAuth (Google, GitHub), JWT sessions |
+
+---
+
+## Tech Stack
 
 | Layer | Technology |
 |-------|------------|
 | Framework | Next.js 16 (App Router) |
-| UI | React 19, Tailwind CSS 4, Radix UI |
-| Auth | NextAuth v5 (Credentials + OAuth), JWT sessions |
-| Database | PostgreSQL (Neon), Drizzle ORM |
-| Charts | Recharts |
-| Email | Resend (optional; console fallback) |
+| Language | TypeScript 5 |
+| Styling | Tailwind CSS 4, shadcn/ui |
+| Auth | NextAuth v5 (JWT, Credentials + OAuth) |
+| ORM | Drizzle ORM |
+| Database | PostgreSQL (Neon) |
+| Charts | Recharts 3 |
+| Email | Resend  |
 
-## RBAC model
+---
 
-| Role | Routes | Capabilities |
-|------|--------|--------------|
-| **Employee** | `/goals`, `/settings` | Own goal sheet, submit, quarterly check-in |
-| **Manager** | `/goals`, `/team`, `/settings` | Direct reports list, review, approve/return, check-in comments |
-| **Admin** | `/goals`, `/team`, `/admin/atomquest`, `/settings` | Org-wide team view, stats, charts, export, audit, shared KPIs |
+## Quick Start
 
-Post-login entry: `/dashboard` → auto-redirects to role home.
-
-## Major features
-
-- Annual goal sheet (draft → submit → return → lock)
-- Manager review with inline edits
-- Quarterly check-ins with UOM-aware inputs and progress scoring
-- Active-quarter locking (only current quarter editable)
-- Shared KPI assignment (admin → employees)
-- Admin dashboard with charts and CSV export
-- Audit trail with before/after diffs
-- Best-effort email notifications
-
-## Screenshots
-
-<!-- Add before submission -->
-| Page | File |
-|------|------|
-| Landing | `docs/screenshots/landing.png` |
-| Employee goals | `docs/screenshots/goals.png` |
-| Manager team | `docs/screenshots/team.png` |
-| Admin overview | `docs/screenshots/admin-overview.png` |
-| Audit trail | `docs/screenshots/admin-audit.png` |
-
-## Setup
-
-### Prerequisites
-
-- Node.js 20+
-- pnpm
-- PostgreSQL database (Neon recommended)
-
-### Install
+**Prerequisites:** Node.js 20+, pnpm, PostgreSQL (Neon recommended)
 
 ```bash
 pnpm install
 cp .example.env .env.local
-# Edit .env.local — set DATABASE_URL and AUTH_SECRET
-```
-
-### Database
-
-```bash
+# Set DATABASE_URL and AUTH_SECRET in .env.local
 pnpm drizzle:push
 pnpm seed:atomquest
-```
-
-### Run
-
-```bash
 pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
 
-### Production build
-
 ```bash
-pnpm build
-pnpm start
+# Production build
+pnpm build && pnpm start
 ```
 
-## Demo accounts
+---
 
-**Password for all:** `AtomQuest@123`
+## Demo Accounts
 
-| Role | Email | Seeded state |
-|------|-------|--------------|
-| Admin | `admin@atomquest.demo` | Full admin access |
-| Manager | `manager@atomquest.demo` | Team of 5 employees |
-| Employee (live demo) | `employee@atomquest.demo` | **DRAFT** — create & submit live |
-| Employee | `priya.sharma@atomquest.demo` | **SUBMITTED** — pending review |
-| Employee | `arjun.mehta@atomquest.demo` | **LOCKED** + check-in + shared KPI owner |
-| Employee | `sam.okonkwo@atomquest.demo` | **LOCKED** + completed check-in |
-| Employee | `jordan.lee@atomquest.demo` | **RETURNED** |
+**Password for all accounts:** `AtomQuest@123`  
+One-click fill buttons are available on the login page.
 
-Login page includes one-click demo account fill.
+| Role | Email | Pre-seeded state |
+|------|-------|------------------|
+| **Admin** | `admin@atomquest.demo` | Full org data, charts, audit entries |
+| **Manager** | `manager@atomquest.demo` | Team of 5 employees in mixed states |
+| **Employee** | `employee@atomquest.demo` | DRAFT — create and submit live |
+| **Employee** | `priya.sharma@atomquest.demo` | SUBMITTED — awaiting review |
+| **Employee** | `arjun.mehta@atomquest.demo` | LOCKED + check-in + shared KPI |
+| **Employee** | `sam.okonkwo@atomquest.demo` | LOCKED + completed Q1 check-in |
+| **Employee** | `jordan.lee@atomquest.demo` | RETURNED — feedback received |
 
-## Hackathon highlights
+---
 
-- Production-shaped auth (JWT, middleware RBAC, role in session)
-- Full goal lifecycle without spreadsheet chaos
-- Fiscal-year cycle awareness
-- Admin governance (audit, export, shared goals)
-- Judge-ready seeded data for charts and dashboards
-- Minimal scope — no over-engineered workflow engine
+## RBAC
+
+| Role | Home | Capabilities |
+|------|------|-------------|
+| Employee | `/goals` | Own goal sheet, submit, quarterly check-in |
+| Manager | `/team` | Direct reports, review, approve/return, check-in comments |
+| Admin | `/admin/atomquest` | Org-wide analytics, audit trail, shared KPIs, CSV export |
+
+---
 
 ## Scripts
 
@@ -133,13 +106,27 @@ Login page includes one-click demo account fill.
 |---------|-------------|
 | `pnpm dev` | Development server |
 | `pnpm build` | Production build |
-| `pnpm seed:atomquest` | Demo data seed |
-| `pnpm typecheck` | TypeScript check |
+| `pnpm seed:atomquest` | Seed demo data |
+| `pnpm drizzle:push` | Push schema to DB (dev) |
+| `pnpm drizzle:studio` | Open Drizzle Studio |
+| `pnpm typecheck` | TypeScript type check |
+
+---
 
 ## Documentation
 
-- [JUDGE_WALKTHROUGH.md](./JUDGE_WALKTHROUGH.md) — 5–8 minute demo script
-- [ARCHITECTURE.md](./ARCHITECTURE.md) — Technical flows
-- [FEATURE_MATRIX.md](./FEATURE_MATRIX.md) — Feature vs BRD mapping
-
-
+| Document | Description |
+|----------|-------------|
+| [docs/SHOWCASE.md](./docs/SHOWCASE.md) | Visual screenshot showcase |
+| [docs/APPLICATION_WALKTHROUGH.md](./docs/APPLICATION_WALKTHROUGH.md) | User workflow guide (employee/manager/admin) |
+| [docs/IMPLEMENTATION.md](./docs/IMPLEMENTATION.md) | Master technical implementation reference |
+| [docs/ARCHITECTURE.md](./docs/ARCHITECTURE.md) | System flows and data models |
+| [docs/API.md](./docs/API.md) | HTTP API reference |
+| [docs/AUTH_RBAC.md](./docs/AUTH_RBAC.md) | Authentication and role model |
+| [docs/DATABASE.md](./docs/DATABASE.md) | Schema and relationships |
+| [docs/TECHNICAL_GUIDE.md](./docs/TECHNICAL_GUIDE.md) | Architecture evolution and scaling |
+| [docs/SETUP.md](./docs/SETUP.md) | Detailed local setup guide |
+| [docs/DEPLOYMENT.md](./docs/DEPLOYMENT.md) | Production deployment |
+| [CONTRIBUTING.md](./CONTRIBUTING.md) | Contribution guide |
+| [docs/KNOWN_LIMITATIONS.md](./docs/KNOWN_LIMITATIONS.md) | Known constraints |
+|
