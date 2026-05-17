@@ -6,6 +6,9 @@ import {
 } from '@/lib/atomquest/session'
 import { listAuditLogs } from '@/lib/queries/atomquest/audit'
 
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
+
 export async function GET() {
     try {
         const user = await requireAtomquestUser()
