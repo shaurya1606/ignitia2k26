@@ -47,7 +47,7 @@ Built for **AtomQuest** as a hackathon demonstration of an enterprise HRTech pla
 | ORM | Drizzle ORM |
 | Database | PostgreSQL (Neon) |
 | Charts | Recharts 3 |
-| Email | Resend (optional; console fallback in dev) |
+| Email | Resend  |
 
 ---
 
@@ -129,4 +129,4 @@ One-click fill buttons are available on the login page.
 | [docs/DEPLOYMENT.md](./docs/DEPLOYMENT.md) | Production deployment |
 | [CONTRIBUTING.md](./CONTRIBUTING.md) | Contribution guide |
 | [docs/KNOWN_LIMITATIONS.md](./docs/KNOWN_LIMITATIONS.md) | Known constraints |
-| [APPLICATION_WALKTHROUGH.md](./docs/APPLICATION_WALKTHROUGH.md) |
+|
