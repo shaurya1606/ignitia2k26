@@ -20,6 +20,9 @@ const assignSchema = z.object({
     employeeIds: z.array(z.string()).min(1),
 })
 
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
+
 export async function POST(request: Request) {
     try {
         const user = await requireAtomquestUser()

@@ -6,6 +6,9 @@ import {
 import { requireAtomquestUser } from '@/lib/atomquest/session'
 import { getCheckInQuarterStatuses } from '@/services/atomquest/cycles'
 
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
+
 export async function GET() {
     try {
         await requireAtomquestUser()
