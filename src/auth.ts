@@ -9,6 +9,16 @@ import { findTwoFactorTokenConfirmationByUserId } from '@/lib/queries/token/sele
 import { deleteTwoFactorConfirmationById } from '@/lib/queries/token/delete'
 import { findTwoAccountsByUserId } from './lib/queries/accounts/select'
 
+/** Skip adapter during build when DATABASE_URL is unset (Vercel). JWT + credentials still work. */
+function createAuthAdapter() {
+    if (!process.env.DATABASE_URL) return undefined
+    return DrizzleAdapter(getDb(), {
+        usersTable: usersTable,
+        accountsTable: accountsTable,
+    })
+}
+
+const authAdapter = createAuthAdapter()
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
     pages: {
@@ -158,9 +168,6 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         },
     },
     ...authConfig,
-    adapter: DrizzleAdapter(getDb(), {
-        usersTable: usersTable,
-        accountsTable: accountsTable,
-    }),
+    ...(authAdapter ? { adapter: authAdapter } : {}),
     session: { strategy: 'jwt' },
 })

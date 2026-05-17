@@ -55,7 +55,8 @@ import { getCycleByPhase } from '@/services/atomquest/cycles'
 
 type RouteContext = { params: Promise<{ userId: string }> }
 
-
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
 
 export async function GET(_request: Request, context: RouteContext) {
 

@@ -16,6 +16,9 @@ import {
 import { db } from '@/lib/dbconfig/db'
 import { getCycleByPhase } from '@/services/atomquest/cycles'
 
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
+
 export async function GET() {
     try {
         const user = await requireAtomquestUser()

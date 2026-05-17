@@ -13,6 +13,9 @@ import { findUserById } from '@/lib/queries/users/select'
 
 type RouteContext = { params: Promise<{ userId: string }> }
 
+export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
+
 export async function POST(request: Request, context: RouteContext) {
     try {
         const manager = await requireAtomquestUser()
