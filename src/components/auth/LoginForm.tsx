@@ -25,6 +25,8 @@ import axios from 'axios'
 import { signIn } from 'next-auth/react'
 import { DEFAULT_LOGIN_REDIRECT } from '@/route'
 import { useSearchParams } from 'next/navigation'
+import { DEMO_ACCOUNTS, DEMO_PASSWORD } from '@/lib/atomquest/demo-accounts'
+
 
 interface LoginFormProps {
     title?: string
@@ -190,6 +192,38 @@ export function LoginForm({
                 </p>
             </div>
 
+            <div className="mb-6 rounded-lg border border-amber-500/30 bg-amber-500/5 p-3 text-left">
+                <p className="text-[10px] font-semibold uppercase tracking-wider text-amber-300/90 mb-2">
+                    Demo accounts · password {DEMO_PASSWORD}
+                </p>
+                <ul className="space-y-2">
+                    {DEMO_ACCOUNTS.map((account) => (
+                        <li key={account.email}>
+                            <button
+                                type="button"
+                                disabled={isPending}
+                                onClick={() => {
+                                    form.setValue('email', account.email)
+                                    form.setValue('password', DEMO_PASSWORD)
+                                    setError('')
+                                }}
+                                className="w-full rounded-md border border-neutral-700/80 bg-black/40 px-3 py-2 text-left text-xs transition hover:border-amber-500/50 hover:bg-amber-500/10 disabled:opacity-50"
+                            >
+                                <span className="font-medium text-amber-100">
+                                    {account.role}
+                                </span>
+                                <span className="block text-neutral-400 truncate">
+                                    {account.email}
+                                </span>
+                                <span className="block text-neutral-500 mt-0.5">
+                                    {account.hint}
+                                </span>
+                            </button>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+
             <form className="my-8" onSubmit={form.handleSubmit(onSubmit)}>
                 {showTwoFactor && (
                     <Controller
@@ -305,15 +339,16 @@ export function LoginForm({
                         />
                     </>
                 )}
-                <div className="flex justify-end">
-                    <Link
-                        href="/reset-password"
-                        className="text-xs text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-                    >
-                        Forgot Password?
-                    </Link>
-                </div>
-
+                
+                    <div className="flex justify-end">
+                        <Link
+                            href="/reset-password"
+                            className="text-xs text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+                        >
+                            Forgot Password?
+                        </Link>
+                    </div>
+            
                 <div className="my-4">
                     <FormError message={error || urlError} />
                     <FormSuccess message={success} />

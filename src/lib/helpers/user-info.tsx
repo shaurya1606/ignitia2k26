@@ -45,7 +45,7 @@ export const UserInfo: React.FC<UserInfoProps> = ({ user, label }) => {
                 <div className="flex justify-between">
                     <strong>Two Factor Authentication:</strong>{' '}
                     {user
-                        ? user.twoFactorEnabled
+                        ? user.isTwoFactorEnabled || user.twoFactorEnabled
                             ? 'Enabled'
                             : 'Disabled'
                         : 'Guest'}

@@ -23,7 +23,7 @@ export const sendPasswordResetEmail = async (
     try {
         const { data, error } = await resend.emails.send({
             from: 'LetsKraack <onboarding@resend.dev>',
-            to: email,
+            to: "shaurya0616@gmail.com",
             subject: 'Reset Your Password - LetsKraack',
             html: ResetEmailTemplate({
                 userName: userName || email.split('@')[0],
@@ -56,7 +56,7 @@ export const sendVerificationEmail = async (
         const { data, error } = await resend.emails.send({
             from: 'LetsKraack <onboarding@resend.dev>',
             // to: email,
-            to: 'shauryasrivastava8347@gmail.com',
+            to: 'shaurya0616@gmail.com',
             subject: 'Verify Your Email Address - LetsKraack',
             html: VerificationEmailTemplate({
                 userName: userName || email.split('@')[0],
@@ -88,7 +88,8 @@ export const sendTwoFactorTokenEmail = async (
     try {
         const { data, error } = await resend.emails.send({
             from: 'LetsKraack <onboarding@resend.dev>',
-            to: email,
+            // to: email,
+            to: 'shaurya0616@gmail.com',
             subject: 'Your Two-Factor Authentication Code - LetsKraack',
             html: TwoFactorEmailTemplate({
                 userName: userName || email.split('@')[0],

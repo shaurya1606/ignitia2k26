@@ -1,19 +1,35 @@
 import {
     boolean,
     integer,
+    pgEnum,
     pgTable,
     primaryKey,
     text,
     timestamp,
+    foreignKey,
 } from 'drizzle-orm/pg-core'
 
+/** AtomQuest portal roles */
 export enum UserRole {
-    USER = 'USER',
+    EMPLOYEE = 'EMPLOYEE',
+    MANAGER = 'MANAGER',
     ADMIN = 'ADMIN',
     SUPER_ADMIN = 'SUPER_ADMIN',
+    /** @deprecated Legacy value — treat the same as EMPLOYEE */
+    USER = 'USER',
 }
 
-export const usersTable = pgTable('user', {
+export const roleEnum = pgEnum('role', [
+    'EMPLOYEE',
+    'MANAGER',
+    'ADMIN',
+    'SUPER_ADMIN',
+    'USER',
+])
+
+export const usersTable = pgTable(
+    'user',
+    {
     id: text('id')
         .primaryKey()
         .$defaultFn(() => crypto.randomUUID()),
@@ -23,7 +39,9 @@ export const usersTable = pgTable('user', {
     emailVerified: timestamp('emailVerified', { mode: 'date' }),
     image: text('image'),
     password: text('password'),
-    role: text('role').$type<UserRole>().default(UserRole.USER),
+    role: roleEnum('role').notNull().default(UserRole.EMPLOYEE),
+    department: text('department'),
+    managerId: text('manager_id'),
     isTwoFactorEnabled: boolean('isTwoFactorEnabled').default(false),
     // Optional reference id to a two-factor confirmation record (not enforced as FK
     // to avoid circular constraints). Stores the id from `twoFactorConfirmation` table
@@ -33,7 +51,19 @@ export const usersTable = pgTable('user', {
     updatedAt: timestamp('updated_at', { mode: 'date' }).$onUpdate(
         () => new Date()
     ),
-})
+    },
+    (table) => [
+        foreignKey({
+            columns: [table.managerId],
+            foreignColumns: [table.id],
+            name: 'user_manager_id_fk',
+        }).onDelete('set null'),
+    ]
+)
+
+/** True for employee-facing users (includes legacy USER role). */
+export const isEmployeeRole = (role: UserRole) =>
+    role === UserRole.EMPLOYEE || role === UserRole.USER
 
 export type AdapterAccountType = 'oauth' | 'oidc' | 'email' | 'webauthn'
 
