@@ -5,6 +5,8 @@ import { useForm, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import { settingsSchema } from '@/lib/schema/authSchema'
+import { roleDisplayLabel } from '@/lib/atomquest/roles'
+import { UserRole } from '@/lib/dbconfig/schema'
 import { useSession } from 'next-auth/react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -35,26 +37,26 @@ export default function SettingsPage() {
         defaultValues: {
             name: session?.user?.name || '',
             email: session?.user?.email || '',
-            role:
-                session?.user?.role === 'USER' ||
-                session?.user?.role === 'ADMIN'
-                    ? session.user.role
-                    : 'USER',
-            isTwoFactorEnabled: session?.user?.twoFactorEnabled || false,
+            role: session?.user?.role ?? UserRole.EMPLOYEE,
+            isTwoFactorEnabled:
+                session?.user?.isTwoFactorEnabled ??
+                session?.user?.twoFactorEnabled ??
+                false,
             password: '',
             newPassword: '',
         },
     })
 
     const isTwoFactorEnabled = useWatch({ control, name: 'isTwoFactorEnabled' })
-    const currentRole = useWatch({ control, name: 'role' })
+    const portalRole = session?.user?.role as UserRole | undefined
 
     const onSubmit = async (data: SettingsFormData) => {
         setMessage(null)
 
         startTransition(async () => {
             try {
-                const response = await axios.post('/api/settings', data)
+                const { role: _omitRole, ...payload } = data
+                const response = await axios.post('/api/settings', payload)
 
                 if (response.data.success) {
                     setMessage({ type: 'success', text: response.data.message })
@@ -157,36 +159,14 @@ export default function SettingsPage() {
                         </div>
 
                         <div className="space-y-2">
-                            <Label htmlFor="role">Role</Label>
-                            <select
-                                id="role"
-                                {...register('role')}
-                                disabled={isPending}
-                                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
-                            >
-                                <option value="USER">👤 User</option>
-                                <option value="ADMIN">👑 Admin</option>
-                            </select>
-                            {errors.role && (
-                                <p className="text-sm text-red-500">
-                                    {errors.role.message}
-                                </p>
-                            )}
-                            <div className="flex items-center gap-2">
-                                <p className="text-sm text-muted-foreground">
-                                    Current role:
-                                </p>
-                                <Badge
-                                    variant={
-                                        currentRole === 'ADMIN'
-                                            ? 'default'
-                                            : 'secondary'
-                                    }
-                                >
-                                    {currentRole === 'ADMIN'
-                                        ? '👑 Admin'
-                                        : '👤 User'}
+                            <Label>Portal role</Label>
+                            <div className="flex flex-wrap items-center gap-2">
+                                <Badge variant="secondary">
+                                    {roleDisplayLabel(portalRole)}
                                 </Badge>
+                                <p className="text-sm text-muted-foreground">
+                                    Assigned by your organization (read-only)
+                                </p>
                             </div>
                         </div>
 

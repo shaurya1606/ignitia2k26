@@ -1,6 +1,6 @@
-# Ignitia — Implementation README
+# PerformIQ — Implementation README
 
-This document summarizes the architecture and implementation details for the Ignitia repository. It assumes you're familiar with Next.js 13+ app directory, TypeScript, and basic auth concepts.
+This document summarizes the architecture and implementation details for the PerformIQ repository. It assumes you're familiar with Next.js 13+ app directory, TypeScript, and basic auth concepts.
 
 ---
 

@@ -11,7 +11,6 @@ import {
     IconBrandLinkedin,
     IconEye,
     IconEyeOff,
-    IconX,
 } from '@tabler/icons-react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Controller, useForm } from 'react-hook-form'
@@ -101,76 +100,58 @@ export function SignupForm({
         })
     }
 
-    const handleClose = () => {
-        router.back()
-    }
-
     const onClickSocialLogin = (provider: string) => {
         signIn(provider, { callbackUrl: DEFAULT_LOGIN_REDIRECT })
     }
 
-    const submitLabel = buttonLabel ?? 'Sign Up'
-
+    const submitLabel = buttonLabel ?? 'Create account'
     const isModal = mode === 'modal'
 
     return (
         <div
             className={cn(
-                'relative mx-auto w-full max-w-md',
+                'w-full',
                 isModal
-                    ? [
-                          'px-6 py-6 sm:px-8 sm:py-8',
-                          'border-2 border-yellow-400 bg-black/80 backdrop-blur-xl',
-                          'shadow-[0_2px_8px_rgba(255,215,0,0.12)]',
-                      ]
-                    : 'shadow-0_2px_8px_rgba(255,215,0,0.12) bg-white p-4 md:p-8 dark:bg-black border-2 border-yellow-400'
+                    ? 'rounded-xl border border-slate-200 bg-white p-6 shadow-sm'
+                    : ''
             )}
         >
-            <button
-                onClick={handleClose}
-                className="absolute top-4 right-4 rounded-full p-1 transition-colors hover:bg-neutral-100 dark:hover:bg-yellow-400/40"
-                aria-label="Close"
-                type="button"
-            >
-                <IconX className="h-5 w-5 text-yellow-400 dark:hover:text-white" />
-            </button>
-
-            <div className="mb-6 text-center">
-                <p className="mb-1 text-[11px] font-semibold tracking-[0.35em] uppercase text-amber-300/80">
-                    Ignitia 2K26
-                </p>
-                <h2 className="text-2xl font-black tracking-tight text-neutral-800 dark:text-amber-50">
+            {/* Header */}
+            <div className="mb-6">
+                <h2 className="text-xl font-semibold text-slate-900">
                     {title}
                 </h2>
-                <p className="mt-2 max-w-sm text-xs sm:text-sm text-neutral-600 dark:text-neutral-300/90">
+                <p className="mt-1.5 text-sm text-slate-500">
                     {subtitle}
                 </p>
             </div>
 
-            <form className="my-8" onSubmit={form.handleSubmit(onSubmit)}>
-                <div className="mb-4 flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-2">
+            {/* Form */}
+            <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
+                <div className="flex flex-col gap-4 sm:flex-row">
                     <Controller
                         name="firstName"
                         control={form.control}
                         render={({ field, fieldState }) => (
                             <LabelInputContainer
                                 data-invalid={fieldState.invalid}
-                                className="md:flex-1"
+                                className="flex-1"
                             >
                                 <Label
                                     htmlFor="firstName"
-                                    className="text-xs font-medium uppercase tracking-[0.22em] text-amber-200/80"
+                                    className="text-sm font-medium text-slate-700"
                                 >
-                                    First Name
+                                    First name
                                 </Label>
                                 <Input
                                     id="firstName"
-                                    placeholder="Tyler"
+                                    placeholder="Jane"
                                     type="text"
                                     {...field}
                                     aria-invalid={fieldState.invalid}
                                     autoComplete="given-name"
                                     disabled={isPending}
+                                    className="border-slate-200 focus-visible:ring-indigo-500"
                                 />
                                 {fieldState.invalid && (
                                     <FieldError errors={[fieldState.error]} />
@@ -184,22 +165,23 @@ export function SignupForm({
                         render={({ field, fieldState }) => (
                             <LabelInputContainer
                                 data-invalid={fieldState.invalid}
-                                className="md:flex-1"
+                                className="flex-1"
                             >
                                 <Label
                                     htmlFor="lastName"
-                                    className="text-xs font-medium uppercase tracking-[0.22em] text-amber-200/80"
+                                    className="text-sm font-medium text-slate-700"
                                 >
-                                    Last Name
+                                    Last name
                                 </Label>
                                 <Input
                                     id="lastName"
-                                    placeholder="Durden"
+                                    placeholder="Smith"
                                     type="text"
                                     {...field}
                                     aria-invalid={fieldState.invalid}
                                     autoComplete="family-name"
                                     disabled={isPending}
+                                    className="border-slate-200 focus-visible:ring-indigo-500"
                                 />
                                 {fieldState.invalid && (
                                     <FieldError errors={[fieldState.error]} />
@@ -213,24 +195,22 @@ export function SignupForm({
                     name="email"
                     control={form.control}
                     render={({ field, fieldState }) => (
-                        <LabelInputContainer
-                            data-invalid={fieldState.invalid}
-                            className="mb-4"
-                        >
+                        <LabelInputContainer data-invalid={fieldState.invalid}>
                             <Label
                                 htmlFor="email"
-                                className="text-xs font-medium uppercase tracking-[0.22em] text-amber-200/80"
+                                className="text-sm font-medium text-slate-700"
                             >
-                                Email Cipher
+                                Work email address
                             </Label>
-                                <Input
-                                    id="email"
-                                    placeholder="ninja.ignitia@domain.com"
+                            <Input
+                                id="email"
+                                placeholder="you@company.com"
                                 type="email"
                                 {...field}
                                 aria-invalid={fieldState.invalid}
                                 autoComplete="email"
                                 disabled={isPending}
+                                className="border-slate-200 focus-visible:ring-indigo-500"
                             />
                             {fieldState.invalid && (
                                 <FieldError errors={[fieldState.error]} />
@@ -243,15 +223,12 @@ export function SignupForm({
                     name="password"
                     control={form.control}
                     render={({ field, fieldState }) => (
-                        <LabelInputContainer
-                            data-invalid={fieldState.invalid}
-                            className="mb-4"
-                        >
+                        <LabelInputContainer data-invalid={fieldState.invalid}>
                             <Label
                                 htmlFor="password"
-                                className="text-xs font-medium uppercase tracking-[0.22em] text-amber-200/80"
+                                className="text-sm font-medium text-slate-700"
                             >
-                                Secret Key
+                                Password
                             </Label>
                             <div className="relative">
                                 <Input
@@ -262,18 +239,17 @@ export function SignupForm({
                                     aria-invalid={fieldState.invalid}
                                     autoComplete="new-password"
                                     disabled={isPending}
+                                    className="border-slate-200 focus-visible:ring-indigo-500 pr-10"
                                 />
                                 <button
                                     type="button"
-                                    onClick={() =>
-                                        setShowPassword(!showPassword)
-                                    }
-                                    className="absolute right-3 top-1/2 -translate-y-1/2 rounded-md bg-transparent p-1 text-neutral-500 transition-colors hover:bg-neutral-100 hover:text-neutral-700 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-200"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
                                 >
                                     {showPassword ? (
-                                        <IconEyeOff className="h-5 w-5 text-yellow-400" />
+                                        <IconEyeOff className="h-4 w-4" />
                                     ) : (
-                                        <IconEye className="h-5 w-5" />
+                                        <IconEye className="h-4 w-4" />
                                     )}
                                 </button>
                             </div>
@@ -288,43 +264,33 @@ export function SignupForm({
                     name="confirmPassword"
                     control={form.control}
                     render={({ field, fieldState }) => (
-                        <LabelInputContainer
-                            data-invalid={fieldState.invalid}
-                            className="mb-4"
-                        >
+                        <LabelInputContainer data-invalid={fieldState.invalid}>
                             <Label
                                 htmlFor="confirmPassword"
-                                className="text-xs font-medium uppercase tracking-[0.22em] text-amber-200/80"
+                                className="text-sm font-medium text-slate-700"
                             >
-                                Confirm Secret
+                                Confirm password
                             </Label>
                             <div className="relative">
                                 <Input
                                     id="confirmPassword"
                                     placeholder="••••••••"
-                                    type={
-                                        showConfirmPassword
-                                            ? 'text'
-                                            : 'password'
-                                    }
+                                    type={showConfirmPassword ? 'text' : 'password'}
                                     {...field}
                                     aria-invalid={fieldState.invalid}
                                     autoComplete="new-password"
                                     disabled={isPending}
+                                    className="border-slate-200 focus-visible:ring-indigo-500 pr-10"
                                 />
                                 <button
                                     type="button"
-                                    onClick={() =>
-                                        setShowConfirmPassword(
-                                            !showConfirmPassword
-                                        )
-                                    }
-                                    className="absolute right-3 top-1/2 -translate-y-1/2 rounded-md bg-transparent p-1 text-neutral-500 transition-colors hover:bg-neutral-100 hover:text-neutral-700 dark:text-neutral-400 dark:hover:bg-neutral-800 dark:hover:text-neutral-200"
+                                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition-colors"
                                 >
                                     {showConfirmPassword ? (
-                                        <IconEyeOff className="h-5 w-5 text-yellow-400" />
+                                        <IconEyeOff className="h-4 w-4" />
                                     ) : (
-                                        <IconEye className="h-5 w-5" />
+                                        <IconEye className="h-4 w-4" />
                                     )}
                                 </button>
                             </div>
@@ -335,111 +301,74 @@ export function SignupForm({
                     )}
                 />
 
-                <div className="my-4">
+                <div>
                     <FormError message={error} />
                     <FormSuccess message={success} />
                 </div>
 
                 <Button
-                    className={cn(
-                        'group/btn relative block h-11 w-full overflow-hidden font-semibold uppercase tracking-[0.18em]',
-                        'bg-linear-to-r from-amber-500 via-yellow-300 to-amber-400 text-zinc-950',
-                        'shadow-[0_2px_8px_rgba(255,215,0,0.10)] transition-all duration-250',
-                        'border-2 border-yellow-400',
-                        'hover:shadow-[0_0_16px_rgba(255,215,0,0.25)] hover:brightness-105',
-                        'disabled:from-zinc-600 disabled:via-zinc-500 disabled:to-zinc-600 disabled:text-zinc-200'
-                    )}
+                    className="w-full h-10 bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm"
                     type="submit"
                     disabled={isPending}
                 >
-                    <span className="relative z-10 flex items-center justify-center gap-2">
-                        <span>{submitLabel}</span>
-                    </span>
-                    <BottomGradient />
+                    {isPending ? 'Creating account…' : submitLabel}
                 </Button>
-
-                <div className="my-8 w-full border-t border-dashed border-amber-400/30" />
-
-                <div className="flex justify-center gap-3 sm:gap-4">
-                    <Button
-                        className="group/btn ninja-social relative flex h-10 items-center justify-start space-x-2 border-2 border-yellow-400/40 bg-zinc-900/70 px-4 font-medium text-amber-50 shadow-[0_2px_8px_rgba(255,215,0,0.10)] backdrop-blur-sm hover:border-yellow-400 hover:bg-zinc-900/90 hover:shadow-[0_0_16px_rgba(255,215,0,0.25)]"
-                        type="button"
-                        onClick={() => onClickSocialLogin('github')}
-                    >
-                        <IconBrandGithub className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
-                        <span className="text-sm text-neutral-700 dark:text-neutral-300">
-                            GitHub
-                        </span>
-                        <BottomGradient />
-                    </Button>
-                    <Button
-                        className="group/btn ninja-social relative flex h-10 items-center justify-start space-x-2 border-2 border-yellow-400/40 bg-zinc-900/70 px-4 font-medium text-amber-50 shadow-[0_2px_8px_rgba(255,215,0,0.10)] backdrop-blur-sm hover:border-yellow-400 hover:bg-zinc-900/90 hover:shadow-[0_0_16px_rgba(255,215,0,0.25)]"
-                        type="button"
-                        onClick={() => onClickSocialLogin('google')}
-                    >
-                        <IconBrandGoogle className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
-                        <span className="text-sm text-neutral-700 dark:text-neutral-300">
-                            Google
-                        </span>
-                        <BottomGradient />
-                    </Button>
-                    <Button
-                        className="group/btn ninja-social relative flex h-10 items-center justify-start space-x-2 border-2 border-yellow-400/40 bg-zinc-900/70 px-4 font-medium text-amber-50 shadow-[0_2px_8px_rgba(255,215,0,0.10)] backdrop-blur-sm hover:border-yellow-400 hover:bg-zinc-900/90 hover:shadow-[0_0_16px_rgba(255,215,0,0.25)]"
-                        type="button"
-                        onClick={() => onClickSocialLogin('linkedin')}
-                    >
-                        <IconBrandLinkedin className="h-4 w-4 text-neutral-800 dark:text-neutral-300" />
-                        <span className="text-sm text-neutral-700 dark:text-neutral-300">
-                            LinkedIn
-                        </span>
-                        <BottomGradient />
-                    </Button>
-                </div>
             </form>
 
-            <div className="mt-6 text-center text-[11px] text-neutral-500 dark:text-neutral-400">
+            {/* Divider */}
+            <div className="my-5 flex items-center gap-3">
+                <div className="flex-1 h-px bg-slate-200" />
+                <span className="text-xs text-slate-400 font-medium">or continue with</span>
+                <div className="flex-1 h-px bg-slate-200" />
+            </div>
+
+            {/* Social login */}
+            <div className="flex gap-2">
+                {[
+                    { icon: IconBrandGithub, label: 'GitHub', provider: 'github' },
+                    { icon: IconBrandGoogle, label: 'Google', provider: 'google' },
+                    { icon: IconBrandLinkedin, label: 'LinkedIn', provider: 'linkedin' },
+                ].map(({ icon: Icon, label, provider }) => (
+                    <Button
+                        key={provider}
+                        variant="outline"
+                        className="flex-1 h-9 border-slate-200 text-slate-600 hover:bg-slate-50 text-xs font-medium gap-1.5"
+                        type="button"
+                        onClick={() => onClickSocialLogin(provider)}
+                    >
+                        <Icon className="h-4 w-4" />
+                        {label}
+                    </Button>
+                ))}
+            </div>
+
+            {/* Footer */}
+            <div className="mt-6 text-center text-sm">
+                <p className="text-slate-500">
+                    Already have an account?{' '}
+                    <button
+                        type="button"
+                        onClick={() => { router.replace('/login') }}
+                        className="font-semibold text-indigo-600 hover:text-indigo-800"
+                    >
+                        Sign in
+                    </button>
+                </p>
+            </div>
+
+            <div className="mt-4 text-center text-xs text-slate-400">
                 <p>
                     By continuing, you agree to our{' '}
-                    <a
-                        href="/terms"
-                        className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline"
-                    >
-                        Terms &amp; Conditions
+                    <a href="/terms" target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:text-indigo-800">
+                        Terms
                     </a>{' '}
                     and{' '}
-                    <a
-                        href="/privacy"
-                        className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 underline"
-                    >
+                    <a href="/privacy" target="_blank" rel="noopener noreferrer" className="text-indigo-600 hover:text-indigo-800">
                         Privacy Policy
                     </a>
                 </p>
             </div>
-
-            <div className="mt-6 text-center text-sm">
-                <p className="text-neutral-600 dark:text-neutral-400">
-                    Already have an account?{' '}
-                    <button
-                        type="button"
-                        onClick={() => {
-                            router.replace('/login')
-                        }}
-                        className="font-semibold text-blue-600 underline hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
-                    >
-                        Log In
-                    </button>
-                </p>
-            </div>
         </div>
-    )
-}
-
-const BottomGradient = () => {
-    return (
-        <>
-            <span className="pointer-events-none absolute inset-x-0 -bottom-px block h-px w-full bg-linear-to-r from-transparent via-amber-300 to-transparent opacity-0 transition duration-500 group-hover/btn:opacity-100" />
-            <span className="pointer-events-none absolute inset-x-10 -bottom-px mx-auto block h-px w-1/2 bg-linear-to-r from-transparent via-yellow-400 to-transparent opacity-0 blur-sm transition duration-500 group-hover/btn:opacity-100" />
-        </>
     )
 }
 
@@ -451,7 +380,7 @@ const LabelInputContainer = ({
     className?: string
 }) => {
     return (
-        <div className={cn('flex w-full flex-col space-y-2', className)}>
+        <div className={cn('flex w-full flex-col space-y-1.5', className)}>
             {children}
         </div>
     )

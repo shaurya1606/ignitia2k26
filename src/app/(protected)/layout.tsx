@@ -7,12 +7,15 @@ const AuthProvider = async ({ children }: { children: React.ReactNode }) => {
     const session = await auth()
     return (
         <SessionProvider session={session}>
-            <div className="min-h-screen flex flex-col w-full gap-y-10 items-center justify-start bg-gradient-to-br from-neutral-900 to-black p-4">
+            <div className="min-h-screen flex flex-col w-full bg-slate-50">
                 <Navbar />
-                {children}
+                <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                    {children}
+                </main>
             </div>
         </SessionProvider>
     )
 }
 
 export default AuthProvider
+

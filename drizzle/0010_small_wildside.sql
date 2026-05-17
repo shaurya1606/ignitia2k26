@@ -1,1 +1,0 @@
-ALTER TABLE "twoFactorConfirmation" ADD COLUMN "expires" timestamp NOT NULL;

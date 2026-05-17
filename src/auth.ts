@@ -10,7 +10,6 @@ import { deleteTwoFactorConfirmationById } from '@/lib/queries/token/delete'
 import { findTwoAccountsByUserId } from './lib/queries/accounts/select'
 
 
-
 export const { auth, handlers, signIn, signOut } = NextAuth({
     pages: {
         signIn: '/login',
@@ -59,14 +58,14 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
                 return false
             }
 
-            if (!existingUser.emailVerified) {
+            if (process.env.EMAIL_SERVICE && process.env.EMAIL_SERVICE === '1' && !existingUser.emailVerified) {
                 // Deny sign in if email is not verified
                 console.log('Credentials sign-in failed: Email not verified')
                 return false
             }
 
             // 2FA check for credentials login
-            if (existingUser.isTwoFactorEnabled) {
+            if (process.env.EMAIL_SERVICE && process.env.EMAIL_SERVICE === '1' && existingUser.isTwoFactorEnabled) {
                 const twoFactorConfirmation =
                     await findTwoFactorTokenConfirmationByUserId(
                         existingUser.id
@@ -106,32 +105,35 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
             return true
         },
         async session({ token, session }) {
-            console.log('Session:', { sessionToken: token, session })
             if (token.sub && session.user) {
                 session.user.id = token.sub
             }
 
-            if (token.role && session.user) {
-                session.user.role = token.role as UserRole
-                // session.user.customField = "some value" // Example of adding a custom field
-            }
-
             if (session.user) {
-                session.user.twoFactorEnabled =
-                    token.isTwoFactorEnabled as boolean
-            }
-
-            if (session.user) {
+                const twoFactorEnabled =
+                    (token.isTwoFactorEnabled as boolean | undefined) ??
+                    ((token as { twoFactorEnabled?: boolean })
+                        .twoFactorEnabled as boolean | undefined) ??
+                    false
+                session.user.role = (token.role as UserRole | undefined) ??
+                    UserRole.EMPLOYEE
+                session.user.isOAuth = token.isOAuth as boolean
+                session.user.isTwoFactorEnabled = twoFactorEnabled
+                session.user.twoFactorEnabled = twoFactorEnabled
                 session.user.name = token.name as string
                 session.user.email = token.email as string
                 session.user.image = token.image as string
-                session.user.isOAuth = token.isOAuth as boolean
             }
 
             return session
         },
-        async jwt({ token }) {
-            console.log('JWT Token:', { token })
+        async jwt({ token, user }) {
+            if (user) {
+                const role = (user as { role?: UserRole }).role
+                if (role) {
+                    token.role = role
+                }
+            }
             if (!token.sub) return token
 
             const existingUser = await findUserById(token.sub)
@@ -148,7 +150,9 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
             token.email = existingUser.email
             token.image = existingUser.image
             token.role = existingUser.role
-            token.isTwoFactorEnabled = existingUser.isTwoFactorEnabled
+            const twoFactor = existingUser.isTwoFactorEnabled ?? false
+            token.isTwoFactorEnabled = twoFactor
+            ;(token as { twoFactorEnabled?: boolean }).twoFactorEnabled = twoFactor
 
             return token
         },

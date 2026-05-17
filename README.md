@@ -1,136 +1,145 @@
-# Authentication-and-Authorization
+# PerformIQ
 
-This repository contains a Next.js application focused on authentication and authorization flows, UI and related backend API routes. It includes client pages and components for signup, login, password-reset flows and protected routes.
+**PerformIQ** · Enterprise-style goal setting, manager approval, and quarterly check-ins.
 
-Summary
-- Framework: Next.js (App Router)
-- Styling: Tailwind CSS
-- Animations: GSAP / Framer Motion (where used)
-- Purpose: Demonstration and implementation of authentication flows, protected routes, and UI components for an event-style site.
+## Problem
 
-## Table of Contents
-- Getting started
-- Development
-- Build & Production
-- Environment variables
-- Project structure
-- Key components
-- Contributing
-- License
+Organizations struggle to align annual goals, manager approvals, and quarterly progress in one auditable system. Spreadsheets and email chains break down at scale.
 
-## Getting started
+## Solution
 
-Prerequisites
-- Node.js 18+ (or the version your monorepo requires)
-- pnpm (recommended) — or npm / yarn
+**PerformIQ** is a role-based web portal where employees draft and submit goal sheets, managers review and lock approvals, and admins govern cycles, shared KPIs, compliance exports, and audit trails.
 
-Install dependencies
+## Architecture (high level)
 
-```powershell
+```
+Browser (Next.js App Router)
+    → proxy.ts (NextAuth + RBAC + AtomQuest route guards)
+    → API routes (/api/atomquest/*)
+    → Drizzle ORM → PostgreSQL (Neon)
+```
+
+See [ARCHITECTURE.md](./ARCHITECTURE.md) for flows.
+
+## Tech stack
+
+| Layer | Technology |
+|-------|------------|
+| Framework | Next.js 16 (App Router) |
+| UI | React 19, Tailwind CSS 4, Radix UI |
+| Auth | NextAuth v5 (Credentials + OAuth), JWT sessions |
+| Database | PostgreSQL (Neon), Drizzle ORM |
+| Charts | Recharts |
+| Email | Resend (optional; console fallback) |
+
+## RBAC model
+
+| Role | Routes | Capabilities |
+|------|--------|--------------|
+| **Employee** | `/goals`, `/settings` | Own goal sheet, submit, quarterly check-in |
+| **Manager** | `/goals`, `/team`, `/settings` | Direct reports list, review, approve/return, check-in comments |
+| **Admin** | `/goals`, `/team`, `/admin/atomquest`, `/settings` | Org-wide team view, stats, charts, export, audit, shared KPIs |
+
+Post-login entry: `/dashboard` → auto-redirects to role home.
+
+## Major features
+
+- Annual goal sheet (draft → submit → return → lock)
+- Manager review with inline edits
+- Quarterly check-ins with UOM-aware inputs and progress scoring
+- Active-quarter locking (only current quarter editable)
+- Shared KPI assignment (admin → employees)
+- Admin dashboard with charts and CSV export
+- Audit trail with before/after diffs
+- Best-effort email notifications
+
+## Screenshots
+
+<!-- Add before submission -->
+| Page | File |
+|------|------|
+| Landing | `docs/screenshots/landing.png` |
+| Employee goals | `docs/screenshots/goals.png` |
+| Manager team | `docs/screenshots/team.png` |
+| Admin overview | `docs/screenshots/admin-overview.png` |
+| Audit trail | `docs/screenshots/admin-audit.png` |
+
+## Setup
+
+### Prerequisites
+
+- Node.js 20+
+- pnpm
+- PostgreSQL database (Neon recommended)
+
+### Install
+
+```bash
 pnpm install
-# or
-npm install
+cp .example.env .env.local
+# Edit .env.local — set DATABASE_URL and AUTH_SECRET
 ```
 
-Run development server
+### Database
 
-```powershell
+```bash
+pnpm drizzle:push
+pnpm seed:atomquest
+```
+
+### Run
+
+```bash
 pnpm dev
-# or
-npm run dev
 ```
 
-Open http://localhost:3000 in your browser.
+Open [http://localhost:3000](http://localhost:3000).
 
-## Development
+### Production build
 
-- Routes and pages live under `src/app/` (App Router).
-- API endpoints are under `src/app/api/`.
-- UI components live in `src/components/`.
-- Utilities, db helpers and services are under `src/lib/` and `src/services/`.
-
-Tip: Many pages use client components (`"use client"`) for animations and interactive UX.
-
-## Build & Production
-
-Build for production
-
-```powershell
+```bash
 pnpm build
 pnpm start
 ```
 
-Deploy: This project can be deployed to Vercel, Netlify, or any Node-compatible host. If using Vercel, the app router is supported out of the box.
+## Demo accounts
 
-## Environment variables
+**Password for all:** `AtomQuest@123`
 
-Create a `.env.local` with the variables your app needs. Example variables used in this project (update names to match the actual code):
+| Role | Email | Seeded state |
+|------|-------|--------------|
+| Admin | `admin@atomquest.demo` | Full admin access |
+| Manager | `manager@atomquest.demo` | Team of 5 employees |
+| Employee (live demo) | `employee@atomquest.demo` | **DRAFT** — create & submit live |
+| Employee | `priya.sharma@atomquest.demo` | **SUBMITTED** — pending review |
+| Employee | `arjun.mehta@atomquest.demo` | **LOCKED** + check-in + shared KPI owner |
+| Employee | `sam.okonkwo@atomquest.demo` | **LOCKED** + completed check-in |
+| Employee | `jordan.lee@atomquest.demo` | **RETURNED** |
 
-```
-DATABASE_URL=postgres://user:pass@host:5432/dbname
-NEXTAUTH_URL=https://your-site.com
-NEXTAUTH_SECRET=some-secret
-SMTP_URL=smtp://user:pass@smtp.example.com:587
-STRIPE_SECRET_KEY=sk_live_...
-TWILIO_SID=ACxxxx
-TWILIO_TOKEN=xxxx
-```
+Login page includes one-click demo account fill.
 
-Only add secrets to `.env*` files and never commit them to source control.
+## Hackathon highlights
 
-## Project structure (high level)
+- Production-shaped auth (JWT, middleware RBAC, role in session)
+- Full goal lifecycle without spreadsheet chaos
+- Fiscal-year cycle awareness
+- Admin governance (audit, export, shared goals)
+- Judge-ready seeded data for charts and dashboards
+- Minimal scope — no over-engineered workflow engine
 
-Key folders under `src/`:
+## Scripts
 
-- `app/` — Next.js app routes and pages (App Router)
-- `app/(auth)` — Authentication pages and flows (signup, login, password reset)
-- `app/(protected)` — Layout and pages for protected routes
-- `components/` — Reusable UI components (auth forms, landing, dashboard, ui primitives)
-- `lib/` — Utilities, db connectors and helpers
-- `services/` — Business logic (auth services, mail, token, user helpers)
+| Command | Description |
+|---------|-------------|
+| `pnpm dev` | Development server |
+| `pnpm build` | Production build |
+| `pnpm seed:atomquest` | Demo data seed |
+| `pnpm typecheck` | TypeScript check |
 
-Example files / entry points:
-- `src/app/page.tsx` — Landing / home page
-- `src/app/layout.tsx` — Global layout
-- `src/app/api/auth/...` — NextAuth and API routes
+## Documentation
 
-## Key components and features
+- [JUDGE_WALKTHROUGH.md](./JUDGE_WALKTHROUGH.md) — 5–8 minute demo script
+- [ARCHITECTURE.md](./ARCHITECTURE.md) — Technical flows
+- [FEATURE_MATRIX.md](./FEATURE_MATRIX.md) — Feature vs BRD mapping
 
-- Authentication flows: Sign up, verify email, login, reset password, new password
-- Protected routes and server-side checks
-- Preloader and page transition animations (GSAP / Tailwind utility classes)
-- Lenis-based smooth scroll on some landing pages
 
-## Troubleshooting & common commands
-
-- Run linting (if configured): `pnpm lint`
-- Run tests (if present): `pnpm test`
-- Format code: `pnpm format` or via your editor setup
-
-## Contributing
-
-1. Fork the repo
-2. Create a new branch: `feature/xyz`
-3. Make changes and add tests
-4. Open a pull request describing the change
-
-Please follow the repository's code style and commit message guidelines.
-
-## Where to find things
-
-- Authentication pages: `src/app/(auth)`
-- Page transition overlay component: `src/app/(routes)/_components/PageTransition.tsx` (controls tile animations)
-- Landing scene & hero: `src/components/landing/*`
-
-## License
-
-This project does not include a license file. Add a `LICENSE` if you want to open-source it (MIT / Apache-2.0 are common choices).
-
----
-
-If you want, I can:
-- Add a `CONTRIBUTING.md` with PR and branch rules
-- Add example `.env.local.example` with variable names used by the app
-- Add automated scripts for lint/test/build in package.json
-
-If you'd like me to write one of those now, tell me which and I'll add it.

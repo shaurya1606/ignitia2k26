@@ -1,17 +1,16 @@
 import GitHub from 'next-auth/providers/github'
-import Linkedin from 'next-auth/providers/linkedin'
 import Google from 'next-auth/providers/google'
 import type { NextAuthConfig } from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
 
 import { LoginFormSchema } from './lib/schema/authSchema'
 import { findUserByEmail } from './lib/queries/users/select'
+import { UserRole } from './lib/dbconfig/schema'
 import bcrypt from 'bcryptjs'
 
 export default {
     providers: [
         GitHub,
-        Linkedin,
         Google,
         Credentials({
             async authorize(credentials) {
@@ -42,6 +41,7 @@ export default {
                     id: user.id,
                     email: user.email,
                     name: name?.length ? name : user.email,
+                    role: (user.role ?? UserRole.EMPLOYEE) as UserRole,
                 }
             },
         }),

@@ -1,1 +1,0 @@
-ALTER TABLE "usersTable" ADD COLUMN "image" text;
