@@ -18,10 +18,16 @@ function createDb() {
 // without DATABASE_URL being present. The error is deferred until
 // the first actual database call at request time.
 let _db: ReturnType<typeof createDb> | undefined
+
+/** Real Drizzle instance — required by Auth.js DrizzleAdapter (cannot use `db` Proxy). */
+export function getDb() {
+    if (!_db) _db = createDb()
+    return _db
+}
+
 export const db = new Proxy({} as ReturnType<typeof createDb>, {
     get(_target, prop) {
-        if (!_db) _db = createDb()
-        return (_db as unknown as Record<string | symbol, unknown>)[prop]
+        return (getDb() as unknown as Record<string | symbol, unknown>)[prop]
     },
 })
 

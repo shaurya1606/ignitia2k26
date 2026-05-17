@@ -1,7 +1,7 @@
 import NextAuth from 'next-auth'
 import authConfig from '@/auth.config'
 import { DrizzleAdapter } from '@auth/drizzle-adapter'
-import { db } from '@/lib/dbconfig/db'
+import { getDb } from '@/lib/dbconfig/db'
 import { findUserById } from '@/lib/queries/users/select'
 import { UserRole, accountsTable, usersTable } from '@/lib/dbconfig/schema'
 import { updateUserEmailVerified } from '@/lib/queries/users/update'
@@ -158,7 +158,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         },
     },
     ...authConfig,
-    adapter: DrizzleAdapter(db, {
+    adapter: DrizzleAdapter(getDb(), {
         usersTable: usersTable,
         accountsTable: accountsTable,
     }),
