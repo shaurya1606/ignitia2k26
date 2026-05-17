@@ -1,68 +1,95 @@
-# PerformIQ — Documentation Index
+# PerformIQ — Documentation
 
-**Status:** **Demo-ready** · Ignitia 2K26 hackathon submission
+**Status:** Demo-ready · Proof of Concept
 
-PerformIQ is an enterprise performance lifecycle platform (UI branding). Internal code and APIs use the `atomquest` module prefix (`/api/atomquest/*`, `/admin/atomquest`).
+> PerformIQ's internal code and APIs use the `atomquest` module prefix (`/api/atomquest/*`, `/admin/atomquest`). All documentation refers to the product as PerformIQ.
 
-## Purpose
+All content is derived from the repository. No speculative features are documented.
 
-Central documentation for engineering review, hackathon judging, and portfolio use. All content is derived from the repository—no speculative features.
+---
 
-## Document map
+## Product
 
-| Document | Purpose |
-|----------|---------|
+| Document | Description |
+|----------|-------------|
+| [SHOWCASE.md](./SHOWCASE.md) | Visual screenshot showcase of all major pages |
+| [APPLICATION_WALKTHROUGH.md](./APPLICATION_WALKTHROUGH.md) | End-user workflow guide for employees, managers, and admins |
+| [FEATURES.md](./FEATURES.md) | Feature catalog with implementation status labels |
+| [FEATURE_MATRIX.md](./FEATURE_MATRIX.md) | BRD traceability matrix |
+| [DEMO_FLOW.md](./DEMO_FLOW.md) | Condensed demo flow for judges |
+| [KNOWN_LIMITATIONS.md](./KNOWN_LIMITATIONS.md) | Known constraints and demo risks |
+
+---
+
+## Engineering
+
+| Document | Description |
+|----------|-------------|
 | [IMPLEMENTATION.md](./IMPLEMENTATION.md) | Master implementation reference (modules, lifecycles, inventories) |
-| [ARCHITECTURE.md](./ARCHITECTURE.md) | System flows: auth, RBAC, goal/check-in lifecycles |
-| [FEATURES.md](./FEATURES.md) | Feature catalog with status labels |
-| [FEATURE_MATRIX.md](./FEATURE_MATRIX.md) | BRD traceability matrix (status × demo × BRD) |
-| [API.md](./API.md) | HTTP API reference (handlers, roles, payloads) |
-| [DATABASE.md](./DATABASE.md) | Drizzle schema, tables, relationships |
-| [AUTH_RBAC.md](./AUTH_RBAC.md) | NextAuth, middleware, role matrix |
-| [UI_UX.md](./UI_UX.md) | Pages, components, design tokens |
-| [DEMO_FLOW.md](./DEMO_FLOW.md) | Judge/demo walkthrough and credentials |
-| [SETUP.md](./SETUP.md) | Local development setup |
+| [API.md](./API.md) | HTTP API reference — handlers, roles, request/response shapes |
+| [DATABASE.md](./DATABASE.md) | Drizzle schema, tables, columns, relationships |
+| [SETUP.md](./SETUP.md) | Local development setup — prerequisites, env vars, seed |
 | [DEPLOYMENT.md](./DEPLOYMENT.md) | Production build and verification |
-| [TESTING.md](./TESTING.md) | Test strategy and current gaps |
-| [KNOWN_LIMITATIONS.md](./KNOWN_LIMITATIONS.md) | Constraints and demo risks |
-| [ROADMAP.md](./ROADMAP.md) | Planned / deferred work (not implemented) |
-| [CHANGELOG.md](./CHANGELOG.md) | Documentation and release notes |
+| [TESTING.md](./TESTING.md) | Test strategy and current coverage gaps |
+| [CHANGELOG.md](./CHANGELOG.md) | Release notes and doc history |
 
-## Tech stack (repository)
+---
 
-| Layer | Technology |
-|-------|------------|
-| Framework | Next.js 16.2.6 (App Router) |
-| Language | TypeScript 5 |
-| UI | React 19, Tailwind CSS 4, Radix-based `components/ui` |
-| Auth | NextAuth 5.0.0-beta.30 (JWT) |
-| ORM | Drizzle 0.45.x |
-| Database | PostgreSQL (Neon serverless driver) |
-| Charts | Recharts 3.x |
-| Email | Resend (optional) |
+## Architecture
 
-## Quick start
+| Document | Description |
+|----------|-------------|
+| [ARCHITECTURE.md](./ARCHITECTURE.md) | System flows: auth, RBAC, goal lifecycle, check-in, audit |
+| [TECHNICAL_GUIDE.md](./TECHNICAL_GUIDE.md) | Architecture evolution — scaling, multi-tenancy, observability, deployment |
+| [ROADMAP.md](./ROADMAP.md) | Deferred and planned features (not implemented) |
+
+---
+
+## Security & Access
+
+| Document | Description |
+|----------|-------------|
+| [AUTH_RBAC.md](./AUTH_RBAC.md) | NextAuth v5, JWT sessions, middleware guards, role matrix |
+
+---
+
+## UI/UX
+
+| Document | Description |
+|----------|-------------|
+| [UI_UX.md](./UI_UX.md) | Pages, components, design tokens, theme system |
+| [SHOWCASE.md](./SHOWCASE.md) | Visual page-by-page showcase with screenshots |
+
+---
+
+## Contribution
+
+| Document | Location |
+|----------|----------|
+| Contributing guide | [../CONTRIBUTING.md](../CONTRIBUTING.md) |
+
+---
+
+## Status Labels
+
+| Label | Meaning |
+|-------|---------|
+| **Implemented** | Works end-to-end |
+| **Demo-ready** | Implemented; tuned for demo/seed data |
+| **Partial** | Incomplete or environment-dependent |
+| **Deferred** | Schema or stub only; no runtime feature |
+| **Planned** | Roadmap only; not in codebase |
+
+---
+
+## Quick Reference
 
 ```bash
 pnpm install
 cp .example.env .env.local   # set DATABASE_URL, AUTH_SECRET
 pnpm drizzle:push
 pnpm seed:atomquest
-pnpm dev
+pnpm dev                     # → http://localhost:3000
 ```
 
-Demo password: `AtomQuest@123` (see [DEMO_FLOW.md](./DEMO_FLOW.md)).
-
-## Status legend
-
-| Label | Meaning |
-|-------|---------|
-| **Implemented** | Works end-to-end in codebase |
-| **Demo-ready** | Implemented; tuned for hackathon demo/seed |
-| **Partial** | Incomplete or env-dependent |
-| **Deferred** | Schema or stub only; no runtime feature |
-| **Planned** | Roadmap only |
-
-## Related files (repository root)
-
-Legacy copies may exist at repo root (`README.md`, `ARCHITECTURE.md`, `JUDGE_WALKTHROUGH.md`). **`/docs` is the maintained documentation set.**
+Demo password: `AtomQuest@123` (see [APPLICATION_WALKTHROUGH.md](./APPLICATION_WALKTHROUGH.md) §11 for all accounts).
