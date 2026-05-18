@@ -1,5 +1,6 @@
 import GitHub from 'next-auth/providers/github'
 import Google from 'next-auth/providers/google'
+import LinkedIn from 'next-auth/providers/linkedin'
 import type { NextAuthConfig } from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
 
@@ -12,6 +13,7 @@ export default {
     providers: [
         GitHub,
         Google,
+        LinkedIn,
         Credentials({
             async authorize(credentials) {
                 const parsedCredentials = LoginFormSchema.safeParse(credentials)
