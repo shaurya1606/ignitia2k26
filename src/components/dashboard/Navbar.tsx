@@ -12,7 +12,6 @@ import {
     isEmployeeRole,
     isManagerRole,
     roleDisplayLabel,
-    roleHomePath,
 } from '@/lib/atomquest/roles'
 import { cn } from '@/lib/utils'
 
@@ -29,7 +28,7 @@ const Navbar = () => {
     const { data: session } = useSession()
     const pathname = usePathname()
     const role = session?.user?.role as UserRole | undefined
-    const home = roleHomePath(role ?? UserRole.EMPLOYEE)
+    const home = '/dashboard'
 
     return (
         <nav className="w-full sticky top-0 z-40 bg-white border-b border-slate-200 shadow-sm">
@@ -63,6 +62,18 @@ const Navbar = () => {
 
                     {/* Nav links */}
                     <div className="flex items-center gap-1">
+                        <Link
+                            href="/dashboard"
+                            className={navLinkClass(pathname === '/dashboard')}
+                        >
+                            Dashboard
+                        </Link>
+                        <Link
+                            href="/notifications"
+                            className={navLinkClass(pathname === '/notifications')}
+                        >
+                            Notifications
+                        </Link>
                         {(isEmployeeRole(role ?? UserRole.EMPLOYEE) ||
                             isManagerRole(role ?? UserRole.MANAGER) ||
                             isAdminRole(role ?? UserRole.ADMIN)) && (
@@ -81,12 +92,24 @@ const Navbar = () => {
                             </Link>
                         )}
                         {role && isAdminRole(role) && (
-                            <Link
-                                href="/admin/atomquest"
-                                className={navLinkClass(pathname.startsWith('/admin/atomquest'))}
-                            >
-                                Admin
-                            </Link>
+                            <>
+                                <Link
+                                    href="/admin/atomquest"
+                                    className={navLinkClass(
+                                        pathname.startsWith('/admin/atomquest')
+                                    )}
+                                >
+                                    Admin
+                                </Link>
+                                <Link
+                                    href="/admin/users"
+                                    className={navLinkClass(
+                                        pathname.startsWith('/admin/users')
+                                    )}
+                                >
+                                    Users
+                                </Link>
+                            </>
                         )}
                         <Link
                             href="/settings"

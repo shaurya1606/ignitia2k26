@@ -21,6 +21,7 @@ function createAuthAdapter() {
 const authAdapter = createAuthAdapter()
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
+    trustHost: true,
     pages: {
         signIn: '/login',
         error: '/error', // Error code passed in query string as ?error=
