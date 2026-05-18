@@ -50,10 +50,17 @@ export function LoginForm({
     const [_emailSent, setEmailSent] = useState(false)
     const [showTwoFactor, setShowTwoFactor] = useState(false)
     const searchParams = useSearchParams()
+    const authError = searchParams.get('error')
     const urlError =
-        searchParams.get('error') === 'OAuthAccountNotLinked'
-            ? 'Your email is already in use. Please use another email'
-            : ''
+        authError === 'OAuthAccountNotLinked'
+            ? 'Your email is already in use. Sign in with credentials or use another provider.'
+            : authError === 'OAuthSignin' || authError === 'OAuthCallback'
+              ? 'Social sign-in failed. Check provider credentials and redirect URLs in your environment.'
+              : authError === 'Configuration'
+                ? 'OAuth is not configured on this server.'
+                : authError
+                  ? 'Sign-in failed. Please try again or use email and password.'
+                  : ''
     const callbackUrl = searchParams.get('callbackUrl') || undefined
 
     type LoginValues = z.infer<typeof LoginFormSchema>
@@ -143,7 +150,11 @@ export function LoginForm({
 
 
     const onClickSocialLogin = (provider: string) => {
-        signIn(provider, { callbackUrl: callbackUrl || DEFAULT_LOGIN_REDIRECT })
+        setError('')
+        signIn(provider, {
+            callbackUrl: callbackUrl || DEFAULT_LOGIN_REDIRECT,
+            redirect: true,
+        })
     }
 
     const submitLabel = buttonLabel ?? 'Sign in'

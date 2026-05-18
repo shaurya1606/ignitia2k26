@@ -101,7 +101,7 @@ export function SignupForm({
     }
 
     const onClickSocialLogin = (provider: string) => {
-        signIn(provider, { callbackUrl: DEFAULT_LOGIN_REDIRECT })
+        signIn(provider, { callbackUrl: DEFAULT_LOGIN_REDIRECT, redirect: true })
     }
 
     const submitLabel = buttonLabel ?? 'Create account'
